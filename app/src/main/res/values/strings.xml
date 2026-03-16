@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">SmartGarbage</string>
+
+    <!-- Login Screen -->
+    <string name="login_title">Welcome Back</string>
+    <string name="login_subtitle">Sign in to manage your routes</string>
+    <string name="hint_email">Email Address</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_login">Login</string>
+    <string name="link_forgot_password">Forgot Password?</string>
+    <string name="logging_in">Logging in…</string>
+
+    <!-- Forgot Password Screen -->
+    <string name="forgot_title">Reset Password</string>
+    <string name="forgot_subtitle">Enter your email to receive a reset link</string>
+    <string name="btn_send_reset">Send Reset Email</string>
+    <string name="btn_back_to_login">Back to Login</string>
+    <string name="reset_email_sent">Check your email for a reset link</string>
+
+    <!-- Validation -->
+    <string name="error_empty_email">Email is required</string>
+    <string name="error_invalid_email">Enter a valid email address</string>
+    <string name="error_empty_password">Password is required</string>
+    <string name="error_network">No internet connection. Please check your network.</string>
+    <string name="error_server">Server error. Please try again later.</string>
+
+    <!-- Logout -->
+    <string name="logout">Logout</string>
+    <string name="logout_confirm">Are you sure you want to log out?</string>
+    <string name="btn_confirm">Confirm</string>
+    <string name="btn_cancel">Cancel</string>
+</resources>

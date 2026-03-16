@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Brand Colors -->
+    <color name="primary_green">#2E7D32</color>
+    <color name="primary_green_dark">#1B5E20</color>
+    <color name="primary_green_light">#4CAF50</color>
+    <color name="accent_green">#81C784</color>
+
+    <!-- Background -->
+    <color name="bg_dark">#121212</color>
+    <color name="bg_surface">#1E1E1E</color>
+    <color name="bg_card">#2C2C2C</color>
+
+    <!-- Text -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B0BEC5</color>
+    <color name="text_hint">#607D8B</color>
+
+    <!-- Input fields -->
+    <color name="input_bg">#252525</color>
+    <color name="input_stroke">#3A3A3A</color>
+    <color name="input_stroke_focused">#2E7D32</color>
+
+    <!-- Status Colors -->
+    <color name="error_red">#EF5350</color>
+    <color name="warning_orange">#FF9800</color>
+    <color name="success_green">#4CAF50</color>
+    <color name="info_blue">#42A5F5</color>
+
+    <!-- Bin fill level colors -->
+    <color name="fill_low">#4CAF50</color>
+    <color name="fill_medium">#FF9800</color>
+    <color name="fill_high">#F44336</color>
+    <color name="fill_critical">#B71C1C</color>
+
+    <!-- Overlay -->
+    <color name="scrim">#99000000</color>
+</resources>
