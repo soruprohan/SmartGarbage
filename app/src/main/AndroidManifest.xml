@@ -18,6 +18,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}"/>
 
+        <!-- Splash: launcher entry point -->
         <activity
             android:name=".SplashActivity"
             android:exported="true"
@@ -28,14 +29,27 @@
             </intent-filter>
         </activity>
 
+        <!-- Auth screens -->
         <activity android:name=".ui.auth.LoginActivity"
             android:exported="false"/>
+        <activity android:name=".ui.auth.ForgotPasswordActivity"
+            android:exported="false" />
 
+        <!-- Phase 2 debug screen (kept for reference) -->
         <activity android:name=".ui.MainActivity"
             android:exported="false"/>
 
-        <activity android:name=".ui.auth.ForgotPasswordActivity"
-            android:exported="false" />
+        <!-- Phase 3: Home Dashboard -->
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- Phase 3: Bin List -->
+        <activity
+            android:name=".ui.bins.BinListActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
 
     </application>
 

@@ -29,6 +29,11 @@ public interface ApiService {
     @GET("api/drivers/home")
     Call<DriverHomeResponse> getDriverHome();
 
+    // Driver-specific assigned bins endpoint (uses authenticateDriver middleware)
+    @GET("api/bins/assigned")
+    Call<List<Bin>> getAssignedBins();
+
+    // Admin-only endpoints kept for reference
     @GET("api/bins/")
     Call<List<Bin>> getAllBins();
 

@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.smartgarbage.ui.MainActivity;
+import com.example.smartgarbage.ui.home.HomeActivity;
 import com.example.smartgarbage.ui.auth.LoginActivity;
 import com.example.smartgarbage.utils.TokenManager;
 
@@ -18,7 +18,8 @@ public class SplashActivity extends AppCompatActivity {
         TokenManager tokenManager = new TokenManager(this);
 
         if (tokenManager.isLoggedIn()) {
-            startActivity(new Intent(this, MainActivity.class));
+            // Token exists → go straight to the dashboard
+            startActivity(new Intent(this, HomeActivity.class));
         } else {
             startActivity(new Intent(this, LoginActivity.class));
         }

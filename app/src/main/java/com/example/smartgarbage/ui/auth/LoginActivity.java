@@ -18,7 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.smartgarbage.R;
 import com.example.smartgarbage.data.model.DriverHomeResponse;
-import com.example.smartgarbage.ui.MainActivity;
+import com.example.smartgarbage.ui.home.HomeActivity;
 import com.example.smartgarbage.utils.TokenManager;
 
 public class LoginActivity extends AppCompatActivity {
@@ -47,13 +47,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void bindViews() {
-        etEmail         = findViewById(R.id.etEmail);
-        etPassword      = findViewById(R.id.etPassword);
-        tvEmailError    = findViewById(R.id.tvEmailError);
-        tvPasswordError = findViewById(R.id.tvPasswordError);
-        tvLoginError    = findViewById(R.id.tvLoginError);
-        btnLogin        = findViewById(R.id.btnLogin);
-        progressBar     = findViewById(R.id.progressBar);
+        etEmail          = findViewById(R.id.etEmail);
+        etPassword       = findViewById(R.id.etPassword);
+        tvEmailError     = findViewById(R.id.tvEmailError);
+        tvPasswordError  = findViewById(R.id.tvPasswordError);
+        tvLoginError     = findViewById(R.id.tvLoginError);
+        btnLogin         = findViewById(R.id.btnLogin);
+        progressBar      = findViewById(R.id.progressBar);
         ivTogglePassword = findViewById(R.id.ivTogglePassword);
         tvForgotPassword = findViewById(R.id.tvForgotPassword);
     }
@@ -80,7 +80,6 @@ public class LoginActivity extends AppCompatActivity {
                 etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 ivTogglePassword.setImageResource(android.R.drawable.ic_menu_view);
             }
-            // Move cursor to end
             etPassword.setSelection(etPassword.getText().length());
         });
 
@@ -92,9 +91,8 @@ public class LoginActivity extends AppCompatActivity {
             if (hasFocus) clearFieldError(tvPasswordError);
         });
 
-        tvForgotPassword.setOnClickListener(v -> {
-            startActivity(new Intent(this, ForgotPasswordActivity.class));
-        });
+        tvForgotPassword.setOnClickListener(v ->
+                startActivity(new Intent(this, ForgotPasswordActivity.class)));
     }
 
     private void observeViewModel() {
@@ -117,13 +115,13 @@ public class LoginActivity extends AppCompatActivity {
             if (result == null) return;
             // Save the token first
             tokenManager.saveToken(result.token);
-            // Then fetch and cache driver info, then navigate
+            // Fetch and cache driver info, then navigate to HomeActivity
             viewModel.fetchDriverInfo(result.token, driverHomeResponse -> {
                 if (driverHomeResponse != null && driverHomeResponse.getDriver() != null) {
                     DriverHomeResponse.Driver d = driverHomeResponse.getDriver();
                     tokenManager.saveDriverInfo(d.getId(), d.getName(), d.getEmail());
                 }
-                navigateToMain();
+                navigateToHome();
             });
         });
     }
@@ -162,8 +160,8 @@ public class LoginActivity extends AppCompatActivity {
         errorView.setVisibility(View.GONE);
     }
 
-    private void navigateToMain() {
-        Intent intent = new Intent(this, MainActivity.class);
+    private void navigateToHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
