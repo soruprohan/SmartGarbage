@@ -35,7 +35,7 @@
         <activity android:name=".ui.auth.ForgotPasswordActivity"
             android:exported="false" />
 
-        <!-- Phase 2 debug screen (kept for reference) -->
+        <!-- Phase 2 debug screen -->
         <activity android:name=".ui.MainActivity"
             android:exported="false"/>
 
@@ -48,6 +48,12 @@
         <!-- Phase 3: Bin List -->
         <activity
             android:name=".ui.bins.BinListActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!-- Phase 4: Map & Route -->
+        <activity
+            android:name=".ui.map.MapActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
 

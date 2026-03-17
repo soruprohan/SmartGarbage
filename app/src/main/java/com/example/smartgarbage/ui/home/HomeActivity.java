@@ -103,10 +103,9 @@ public class HomeActivity extends AppCompatActivity {
         btnViewAll.setOnClickListener(v ->
                 startActivity(new Intent(this, BinListActivity.class)));
 
-        btnStartRoute.setOnClickListener(v -> {
-            // Phase 4: Map/Route activity — for now shows a message
-            Toast.makeText(this, "Map & Route coming in Phase 4", Toast.LENGTH_SHORT).show();
-        });
+        // ── Phase 4: Start Route opens MapActivity ──
+        btnStartRoute.setOnClickListener(v ->
+                startActivity(new Intent(this, com.example.smartgarbage.ui.map.MapActivity.class)));
     }
 
     private void setupBottomNav() {
@@ -115,13 +114,15 @@ public class HomeActivity extends AppCompatActivity {
         bottomNav.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.nav_home) {
-                return true; // already here
+                return true;
             } else if (id == R.id.nav_bins) {
                 startActivity(new Intent(this, BinListActivity.class));
                 overridePendingTransition(0, 0);
                 return true;
             } else if (id == R.id.nav_map) {
-                Toast.makeText(this, "Map coming in Phase 4", Toast.LENGTH_SHORT).show();
+                // ── Phase 4: Map tab opens MapActivity ──
+                startActivity(new Intent(this, com.example.smartgarbage.ui.map.MapActivity.class));
+                overridePendingTransition(0, 0);
                 return true;
             } else if (id == R.id.nav_messages) {
                 Toast.makeText(this, "Messages coming in Phase 5", Toast.LENGTH_SHORT).show();
