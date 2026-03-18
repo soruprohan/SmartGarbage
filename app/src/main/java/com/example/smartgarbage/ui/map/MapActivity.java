@@ -443,7 +443,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 finish();
                 return true;
             } else if (id == R.id.nav_messages) {
-                Toast.makeText(this, "Messages coming in Phase 5", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, com.example.smartgarbage.ui.messages.MessagesActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
                 return true;
             } else if (id == R.id.nav_profile) {
                 Toast.makeText(this, "Profile coming in Phase 6", Toast.LENGTH_SHORT).show();
