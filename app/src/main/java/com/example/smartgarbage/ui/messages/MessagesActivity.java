@@ -55,14 +55,17 @@ public class MessagesActivity extends AppCompatActivity {
         setupSendButton();
         observeViewModel();
 
-        // Step 1: discover the admin (or confirm cached adminId)
         viewModel.loadAdminInfo();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        // Connect socket when screen becomes active
+        // Begin 500ms polling. If adminId isn't known yet, the ViewModel
+        // will auto-start polling the moment setAdminIdAndStartPolling() is called.
+        viewModel.startPolling();
+
+        // Keep socket alive for sending (it's still useful for outgoing messages)
         String token = viewModel.getTokenManager().getToken();
         if (token != null) {
             SocketManager.getInstance().connect(token);
@@ -70,29 +73,21 @@ public class MessagesActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        // Register real-time listener whenever activity is in foreground
-        registerSocketListener();
-        updateConnectionBadge();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // Unregister to avoid ghost listeners
-        SocketManager.getInstance().offNewMessage();
+    protected void onStop() {
+        super.onStop();
+        // Pause polling while the screen is not visible.
+        viewModel.stopPolling();
     }
 
     // ─── View binding ───
 
     private void bindViews() {
-        rvMessages        = findViewById(R.id.rvMessages);
-        etMessage         = findViewById(R.id.etMessage);
-        btnSend           = findViewById(R.id.btnSend);
-        progressBar       = findViewById(R.id.progressBarMessages);
-        tvAdminName       = findViewById(R.id.tvAdminName);
-        tvConnectionStatus= findViewById(R.id.tvConnectionStatus);
+        rvMessages         = findViewById(R.id.rvMessages);
+        etMessage          = findViewById(R.id.etMessage);
+        btnSend            = findViewById(R.id.btnSend);
+        progressBar        = findViewById(R.id.progressBarMessages);
+        tvAdminName        = findViewById(R.id.tvAdminName);
+        tvConnectionStatus = findViewById(R.id.tvConnectionStatus);
     }
 
     // ─── RecyclerView ───
@@ -100,7 +95,7 @@ public class MessagesActivity extends AppCompatActivity {
     private void setupRecyclerView() {
         adapter = new MessageAdapter(viewModel.getDriverId());
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setStackFromEnd(true); // newest at bottom
+        layoutManager.setStackFromEnd(true);
         rvMessages.setLayoutManager(layoutManager);
         rvMessages.setAdapter(adapter);
     }
@@ -157,43 +152,13 @@ public class MessagesActivity extends AppCompatActivity {
             etMessage.setText("");
 
             if (SocketManager.getInstance().isConnected()) {
-                // Prefer socket path — backend saves + broadcasts
+                // Send via socket — backend saves it and the next poll will pick it up
                 SocketManager.getInstance().sendMessage(viewModel.getAdminId(), content);
-                // The newMessage event will come back to us via socket listener
             } else {
                 // Fallback: REST API
                 viewModel.sendMessageViaRest(content);
             }
         });
-    }
-
-    // ─── Socket listener ───
-
-    private void registerSocketListener() {
-        SocketManager.getInstance().onNewMessage(args -> {
-            if (args.length == 0) return;
-            try {
-                // args[0] is a JSONObject from the server
-                JSONObject json = (JSONObject) args[0];
-                Message message = gson.fromJson(json.toString(), Message.class);
-                // Post to main thread
-                runOnUiThread(() -> {
-                    viewModel.appendMessage(message);
-                    scrollToBottom();
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    private void updateConnectionBadge() {
-        boolean connected = SocketManager.getInstance().isConnected();
-        if (tvConnectionStatus != null) {
-            tvConnectionStatus.setText(connected ? "● Live" : "● Connecting…");
-            tvConnectionStatus.setTextColor(getResources().getColor(
-                    connected ? R.color.success_green : R.color.warning_orange, null));
-        }
     }
 
     // ─── ViewModel observers ───
@@ -205,33 +170,30 @@ public class MessagesActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
             } else if (resource.status == Resource.Status.SUCCESS) {
                 progressBar.setVisibility(View.GONE);
+
+                int resolvedAdminId;
                 if (resource.data != null) {
                     AdminInfo admin = resource.data;
-                    viewModel.setAdminId(admin.getId());
+                    resolvedAdminId = admin.getId();
                     tvAdminName.setText(admin.getName() != null ? admin.getName() : "Admin");
-                    // Join socket room now that we know admin ID
-                    SocketManager.getInstance().joinRoom(viewModel.getDriverId(), admin.getId());
-                    // Load message history
-                    viewModel.loadMessages();
                 } else {
-                    // No prior conversation — still open chat, but admin ID unknown
-                    // We'll use a hardcoded fallback: admin ID is typically 1
-                    // The admin will initiate first or the driver can send and room is set up on send
+                    resolvedAdminId = 1;
                     tvAdminName.setText("Admin");
-                    // Try to use admin_id = 1 as the single admin
-                    viewModel.setAdminId(1);
-                    SocketManager.getInstance().joinRoom(viewModel.getDriverId(), 1);
-                    viewModel.loadMessages();
                     Toast.makeText(this, "No prior conversations. Start a new message!", Toast.LENGTH_SHORT).show();
                 }
-                updateConnectionBadge();
+
+                // This sets the admin ID AND kicks off polling (and joinRoom for socket)
+                viewModel.setAdminIdAndStartPolling(resolvedAdminId);
+                SocketManager.getInstance().joinRoom(viewModel.getDriverId(), resolvedAdminId);
+                viewModel.loadMessages();
+
             } else if (resource.status == Resource.Status.ERROR) {
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(this, "Error: " + resource.message, Toast.LENGTH_SHORT).show();
             }
         });
 
-        // 2. Messages list
+        // 2. Messages list — updated by both initial load and every poll tick
         viewModel.getMessagesLiveData().observe(this, resource -> {
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                 adapter.setMessages(resource.data);
@@ -239,7 +201,7 @@ public class MessagesActivity extends AppCompatActivity {
             }
         });
 
-        // 3. REST send result (fallback)
+        // 3. REST send fallback result
         viewModel.getSendMessageResult().observe(this, resource -> {
             if (resource.status == Resource.Status.ERROR) {
                 Toast.makeText(this, "Send failed: " + resource.message, Toast.LENGTH_SHORT).show();
