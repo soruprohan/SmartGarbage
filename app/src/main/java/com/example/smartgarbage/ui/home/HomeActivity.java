@@ -62,7 +62,7 @@ public class HomeActivity extends AppCompatActivity {
         observeViewModel();
 
         // Welcome message
-        tvWelcome.setText("Welcome back,\n" + viewModel.getDriverName() + " 👋");
+        tvWelcome.setText("Welcome back,\n" + viewModel.getDriverName());
 
         viewModel.loadAssignedBins();
     }

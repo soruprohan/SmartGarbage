@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#CC121212"
+        android:background="#E6FFFFFF"
         android:padding="12dp"
         android:gravity="center_vertical">
 
@@ -29,7 +29,7 @@
             android:layout_height="40dp"
             android:src="@android:drawable/ic_menu_close_clear_cancel"
             android:background="?attr/selectableItemBackgroundBorderless"
-            app:tint="@color/white"
+            app:tint="@color/text_primary"
             android:contentDescription="Back" />
 
         <TextView
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Route Map"
-            android:textColor="@color/white"
+            android:textColor="@color/text_primary"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginStart="8dp" />
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="end">
+            android:gravity="start">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -57,7 +57,7 @@
                 <View
                     android:layout_width="10dp"
                     android:layout_height="10dp"
-                    android:background="#F44336"
+                    android:background="#D32F2F"
                     android:layout_marginEnd="4dp"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -75,7 +75,7 @@
                 <View
                     android:layout_width="10dp"
                     android:layout_height="10dp"
-                    android:background="#FF9800"
+                    android:background="#FFA000"
                     android:layout_marginEnd="4dp"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -93,7 +93,7 @@
                 <View
                     android:layout_width="10dp"
                     android:layout_height="10dp"
-                    android:background="#4CAF50"
+                    android:background="#388E3C"
                     android:layout_marginEnd="4dp"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -147,12 +147,10 @@
             <Button
                 android:id="@+id/btnNavigate"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:text="🧭  Navigate (Google Maps)"
-                android:textColor="@color/white"
-                android:backgroundTint="@color/primary_green"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Navigate"
+                android:textAllCaps="false" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -164,7 +162,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="80dp"
-        android:background="#CC1E1E1E"
+        android:background="#E6FFFFFF"
         android:padding="16dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
@@ -191,7 +189,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="80dp"
-        android:background="#CC1E1E1E"
+        android:background="#E6FFFFFF"
         android:padding="16dp"
         android:text="✅ No bins above 80% — all clear!"
         android:textColor="@color/success_green"

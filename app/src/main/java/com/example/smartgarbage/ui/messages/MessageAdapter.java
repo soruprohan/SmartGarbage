@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.smartgarbage.R;
@@ -82,9 +83,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             if (isMine) {
                 params.gravity = Gravity.END;
                 layoutMessage.setBackgroundResource(R.drawable.bg_message_sent);
+                tvContent.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.white));
+                tvTime.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.white));
             } else {
                 params.gravity = Gravity.START;
                 layoutMessage.setBackgroundResource(R.drawable.bg_message_received);
+                tvContent.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.text_primary));
+                tvTime.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.text_hint));
             }
             layoutMessage.setLayoutParams(params);
         }

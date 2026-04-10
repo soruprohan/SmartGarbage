@@ -297,7 +297,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         googleMap.addPolyline(new PolylineOptions()
                 .addAll(points)
                 .width(10f)
-                .color(Color.parseColor("#2196F3"))
+                .color(Color.parseColor("#00897B"))
                 .geodesic(true));
     }
 

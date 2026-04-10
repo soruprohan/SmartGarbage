@@ -16,10 +16,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#1A4CAF50"
+            android:background="#1A388E3C"
             android:padding="16dp"
             android:text="✅ Phase 2 Verification"
-            android:textColor="#4CAF50"
+            android:textColor="#388E3C"
             android:textSize="18sp"
             android:textStyle="bold"
             android:gravity="center"

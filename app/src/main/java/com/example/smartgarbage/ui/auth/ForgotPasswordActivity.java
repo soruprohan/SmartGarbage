@@ -70,8 +70,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         viewModel.getForgotSuccess().observe(this, msg -> {
             if (msg == null) return;
             tvStatusMessage.setText(msg);
-            tvStatusMessage.setTextColor(Color.parseColor("#4CAF50"));
-            tvStatusMessage.setBackgroundColor(Color.parseColor("#1A4CAF50"));
+            tvStatusMessage.setTextColor(Color.parseColor("#388E3C"));
+            tvStatusMessage.setBackgroundColor(Color.parseColor("#1A388E3C"));
             tvStatusMessage.setVisibility(View.VISIBLE);
             btnSendReset.setEnabled(false); // Prevent re-send spam
         });
@@ -79,8 +79,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         viewModel.getForgotError().observe(this, error -> {
             if (error == null) return;
             tvStatusMessage.setText(error);
-            tvStatusMessage.setTextColor(Color.parseColor("#EF5350"));
-            tvStatusMessage.setBackgroundColor(Color.parseColor("#1AEF5350"));
+            tvStatusMessage.setTextColor(Color.parseColor("#D32F2F"));
+            tvStatusMessage.setBackgroundColor(Color.parseColor("#1AD32F2F"));
             tvStatusMessage.setVisibility(View.VISIBLE);
         });
     }

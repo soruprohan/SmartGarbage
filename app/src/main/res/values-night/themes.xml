@@ -1,8 +1,8 @@
-<!-- Night theme is same as base since we always use dark mode -->
+<!-- Night theme — inherits the same light palette for consistency -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.SmartGarbage" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
+    <style name="Base.Theme.SmartGarbage" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Customize your dark theme here if desired. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
 </resources>

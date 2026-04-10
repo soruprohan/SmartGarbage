@@ -48,8 +48,8 @@
                     android:id="@+id/tvConnectionStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="● Connecting…"
-                    android:textColor="@color/warning_orange"
+                    android:text="Connected"
+                    android:textColor="@color/success_green"
                     android:textSize="12sp"
                     android:layout_marginTop="2dp"/>
             </LinearLayout>

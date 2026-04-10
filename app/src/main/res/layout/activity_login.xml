@@ -157,7 +157,7 @@
             android:id="@+id/tvLoginError"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#1AEF5350"
+            android:background="#1AD32F2F"
             android:padding="12dp"
             android:textColor="@color/error_red"
             android:textSize="13sp"
