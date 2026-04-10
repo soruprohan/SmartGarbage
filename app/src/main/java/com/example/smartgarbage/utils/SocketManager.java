@@ -13,7 +13,7 @@ import io.socket.emitter.Emitter;
 public class SocketManager {
 
     private static final String TAG = "SocketManager";
-    private static final String SERVER_URL = "https://smart-garbage-production.up.railway.app";
+    private static final String SERVER_URL = "https://smart-garbage-1.onrender.com";
 
     private static SocketManager instance;
     private Socket socket;

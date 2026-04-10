@@ -25,7 +25,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "BASE_URL", "\"https://smart-garbage-production.up.railway.app/\"")
+        buildConfigField("String", "BASE_URL", "\"https://smart-garbage-1.onrender.com/\"")
         buildConfigField("String", "MAPS_API_KEY", "\"$mapsKey\"")
         manifestPlaceholders["MAPS_API_KEY"] = mapsKey
     }
