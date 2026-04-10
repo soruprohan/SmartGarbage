@@ -1,6 +1,7 @@
 package com.example.smartgarbage.ui.profile;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,6 +17,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
@@ -261,13 +263,16 @@ public class ProfileActivity extends AppCompatActivity {
         tvDriverId.setText(String.valueOf(profile.getId()));
         tvBinCount.setText(String.valueOf(profile.getAssignedBinCount()));
 
-        // Status badge
+        // Status badge: keep text white and tint the background by status.
         String status = profile.getStatus();
         if (status != null) {
             tvStatus.setText(status);
-            tvStatus.setTextColor(getResources().getColor(
-                    "active".equalsIgnoreCase(status) ? R.color.success_green : R.color.warning_orange,
-                    getTheme()));
+            tvStatus.setTextColor(ContextCompat.getColor(this, R.color.white));
+            int badgeColor = ContextCompat.getColor(
+                    this,
+                    "active".equalsIgnoreCase(status) ? R.color.success_green : R.color.warning_orange
+            );
+            tvStatus.setBackgroundTintList(ColorStateList.valueOf(badgeColor));
         }
 
         // Editable fields
@@ -277,6 +282,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         // Load avatar from Cloudinary URL using Glide
         if (profile.getPhotoUrl() != null && !profile.getPhotoUrl().isEmpty()) {
+            ivAvatar.setPadding(0, 0, 0, 0);
             Glide.with(this)
                     .load(profile.getPhotoUrl())
                     .placeholder(R.drawable.ic_nav_profile)
@@ -284,7 +290,9 @@ public class ProfileActivity extends AppCompatActivity {
                     .circleCrop()
                     .into(ivAvatar);
         } else {
-            // Default avatar with circle background
+            // Keep a bit of inset only for the default icon state.
+            int iconInset = (int) (20 * getResources().getDisplayMetrics().density);
+            ivAvatar.setPadding(iconInset, iconInset, iconInset, iconInset);
             ivAvatar.setImageResource(R.drawable.ic_nav_profile);
         }
     }
@@ -307,7 +315,8 @@ public class ProfileActivity extends AppCompatActivity {
 
             pendingPhotoFile = tempFile;
 
-            // Preview the chosen photo immediately
+            // Preview selected photo edge-to-edge inside the avatar circle.
+            ivAvatar.setPadding(0, 0, 0, 0);
             Glide.with(this)
                     .load(uri)
                     .circleCrop()

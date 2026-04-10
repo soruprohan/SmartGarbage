@@ -36,12 +36,17 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp">
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_avatar_placeholder" />
+
                     <ImageView
                         android:id="@+id/ivAvatar"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_gravity="center"
                         android:scaleType="centerCrop"
-                        android:background="@drawable/bg_avatar_placeholder"
                         android:src="@drawable/ic_nav_profile"
                         android:padding="20dp"
                         android:contentDescription="Profile photo" />
@@ -86,7 +91,7 @@
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="4dp"
                     android:text="active"
-                    android:textColor="@color/success_green"
+                    android:textColor="@color/white"
                     android:textSize="12sp" />
 
             </LinearLayout>
@@ -332,7 +337,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="20dp"
-                    android:backgroundTint="@color/info_blue"
+                    android:backgroundTint="@color/primary_green"
                     android:text="Change Password"
                     android:textColor="@color/white"
                     android:textSize="15sp" />

@@ -60,6 +60,30 @@
                             android:lineSpacingMultiplier="1.2" />
                     </LinearLayout>
 
+                    <FrameLayout
+                        android:id="@+id/btnHomeProfileAvatar"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/home_profile_photo">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_avatar_placeholder" />
+
+                        <ImageView
+                            android:id="@+id/ivHomeAvatar"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_nav_profile"
+                            android:contentDescription="@null" />
+                    </FrameLayout>
+
                 </LinearLayout>
 
                 <!-- Loading indicator -->

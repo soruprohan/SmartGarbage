@@ -60,12 +60,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     class MessageViewHolder extends RecyclerView.ViewHolder {
 
+        private final LinearLayout messageRow;
         private final LinearLayout layoutMessage;
         private final TextView tvContent;
         private final TextView tvTime;
 
         MessageViewHolder(@NonNull View itemView) {
             super(itemView);
+            messageRow = itemView.findViewById(R.id.messageRow);
             layoutMessage = itemView.findViewById(R.id.layoutMessage);
             tvContent = itemView.findViewById(R.id.tvMessageContent);
             tvTime = itemView.findViewById(R.id.tvMessageTime);
@@ -78,20 +80,18 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             tvContent.setText(message.getContent());
             tvTime.setText(formatTime(message.getCreatedAt()));
 
-            // Align right for own messages, left for admin messages
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) layoutMessage.getLayoutParams();
+            // Align entire row so bubble starts at left for received and right for sent.
+            messageRow.setGravity(isMine ? Gravity.RIGHT : Gravity.LEFT);
+
             if (isMine) {
-                params.gravity = Gravity.END;
                 layoutMessage.setBackgroundResource(R.drawable.bg_message_sent);
                 tvContent.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.white));
                 tvTime.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.white));
             } else {
-                params.gravity = Gravity.START;
                 layoutMessage.setBackgroundResource(R.drawable.bg_message_received);
                 tvContent.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.text_primary));
                 tvTime.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.text_hint));
             }
-            layoutMessage.setLayoutParams(params);
         }
 
         private String formatTime(String isoDate) {

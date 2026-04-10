@@ -29,4 +29,7 @@
     <string name="logout_confirm">Are you sure you want to log out?</string>
     <string name="btn_confirm">Confirm</string>
     <string name="btn_cancel">Cancel</string>
+
+    <!-- Home Screen -->
+    <string name="home_profile_photo">Open profile</string>
 </resources>

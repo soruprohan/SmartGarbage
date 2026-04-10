@@ -51,6 +51,10 @@ public class TokenManager {
                 .apply();
     }
 
+    public void saveDriverPhotoUrl(String photoUrl) {
+        prefs.edit().putString(Constants.KEY_DRIVER_PHOTO_URL, photoUrl).apply();
+    }
+
     public int getDriverId() {
         return prefs.getInt(Constants.KEY_DRIVER_ID, -1);
     }
@@ -61,6 +65,10 @@ public class TokenManager {
 
     public String getDriverEmail() {
         return prefs.getString(Constants.KEY_DRIVER_EMAIL, null);
+    }
+
+    public String getDriverPhotoUrl() {
+        return prefs.getString(Constants.KEY_DRIVER_PHOTO_URL, null);
     }
 
     public void clearAll() {

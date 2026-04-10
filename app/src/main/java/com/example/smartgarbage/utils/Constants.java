@@ -10,4 +10,5 @@ public class Constants {
     public static final String KEY_DRIVER_ID = "driver_id";
     public static final String KEY_DRIVER_NAME = "driver_name";
     public static final String KEY_DRIVER_EMAIL = "driver_email";
+    public static final String KEY_DRIVER_PHOTO_URL = "driver_photo_url";
 }
