@@ -2,6 +2,7 @@ package com.example.smartgarbage.data.api;
 
 import com.example.smartgarbage.data.model.AdminConversationsResponse;
 import com.example.smartgarbage.data.model.Bin;
+import com.example.smartgarbage.data.model.CollectBinResponse;
 import com.example.smartgarbage.data.model.ChangePasswordRequest;
 import com.example.smartgarbage.data.model.DriverHomeResponse;
 import com.example.smartgarbage.data.model.DriverProfile;
@@ -82,6 +83,13 @@ public interface ApiService {
 
     @GET("api/bins/{id}")
     Call<Bin> getBinById(@Path("id") int id);
+
+    @Multipart
+    @PUT("api/bins/{id}/collect")
+    Call<CollectBinResponse> markBinCollected(
+        @Path("id") int binId,
+        @Part MultipartBody.Part photo
+    );
 
     // ── Phase 5: Messaging ────────────────────────────────────────────────────
 

@@ -20,15 +20,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="6dp">
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/tvBinName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Bin A1"
+                android:text="Main Street Bin"
                 android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -36,47 +35,59 @@
             <TextView
                 android:id="@+id/tvBinStatus"
                 android:layout_width="wrap_content"
-                android:layout_height="22dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/bg_status_badge"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="3dp"
-                android:text="WORKING"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="NORMAL"
                 android:textColor="@color/white"
-                android:textSize="10sp"
+                android:textSize="11sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- Row 2: Location -->
+        <!-- Row 2: Location/Address -->
         <TextView
-            android:id="@+id/tvBinLocation"
+            android:id="@+id/tvBinAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Location"
+            android:layout_marginTop="4dp"
+            android:text="123 Main St, Downtown"
             android:textColor="@color/text_secondary"
-            android:textSize="13sp"
-            android:layout_marginBottom="12dp"
-            android:drawablePadding="4dp" />
+            android:textSize="13sp" />
 
-        <!-- Row 3: Progress bar + percentage -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="12dp"
+            android:background="#EEEEEE" />
+
+        <!-- Row 3: Fill Level Progress -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fill Level"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp" />
+
             <ProgressBar
-                android:id="@+id/progressFillLevel"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:id="@+id/pbFillLevel"
+                style="@android:style/Widget.ProgressBar.Horizontal"
                 android:layout_width="0dp"
                 android:layout_height="8dp"
                 android:layout_weight="1"
+                android:layout_marginHorizontal="12dp"
                 android:max="100"
                 android:progress="50"
-                android:progressBackgroundTint="#E0E0E0"
-                android:layout_marginEnd="10dp" />
+                android:progressDrawable="@drawable/progress_fill_level" />
 
             <TextView
-                android:id="@+id/tvFillPercent"
+                android:id="@+id/tvFillPercentage"
                 android:layout_width="38dp"
                 android:layout_height="wrap_content"
                 android:text="50%"
@@ -85,6 +96,18 @@
                 android:textStyle="bold"
                 android:gravity="end" />
         </LinearLayout>
+
+        <!-- Mark as Collected button -->
+        <Button
+            android:id="@+id/btnMarkCollected"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="12dp"
+            android:text="Mark as Collected"
+            android:textSize="13sp"
+            android:textColor="@color/white"
+            android:backgroundTint="#4CAF50"
+            app:cornerRadius="8dp" />
 
     </LinearLayout>
 

@@ -2,11 +2,14 @@ package com.example.smartgarbage.ui.bins;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -20,15 +23,32 @@ import java.util.List;
 
 public class BinAdapter extends RecyclerView.Adapter<BinAdapter.BinViewHolder> {
 
+    // Existing click listener — for tapping the whole card
     public interface OnBinClickListener {
         void onBinClick(Bin bin);
     }
 
+    // New listener — for the "Mark as Collected" button only
+    public interface OnCollectClickListener {
+        void onCollectClick(int binId);
+    }
+
     private List<Bin> bins = new ArrayList<>();
-    private OnBinClickListener listener;
+    private final OnBinClickListener listener;
+    private OnCollectClickListener collectListener;
+    private Location driverLocation; // driver's current GPS location
 
     public BinAdapter(OnBinClickListener listener) {
         this.listener = listener;
+    }
+
+    public void setCollectListener(OnCollectClickListener collectListener) {
+        this.collectListener = collectListener;
+    }
+
+    // Called from BinListActivity after getting the driver's location
+    public void setDriverLocation(Location location) {
+        this.driverLocation = location;
     }
 
     public void setBins(List<Bin> bins) {
@@ -60,14 +80,16 @@ public class BinAdapter extends RecyclerView.Adapter<BinAdapter.BinViewHolder> {
         TextView tvFillPercent;
         TextView tvStatus;
         ProgressBar progressFill;
+        Button btnMarkCollected;
 
         BinViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvBinName     = itemView.findViewById(R.id.tvBinName);
-            tvLocation    = itemView.findViewById(R.id.tvBinLocation);
-            tvFillPercent = itemView.findViewById(R.id.tvFillPercent);
-            tvStatus      = itemView.findViewById(R.id.tvBinStatus);
-            progressFill  = itemView.findViewById(R.id.progressFillLevel);
+            tvBinName        = itemView.findViewById(R.id.tvBinName);
+            tvLocation       = itemView.findViewById(R.id.tvBinAddress);
+            tvFillPercent    = itemView.findViewById(R.id.tvFillPercentage);
+            tvStatus         = itemView.findViewById(R.id.tvBinStatus);
+            progressFill     = itemView.findViewById(R.id.pbFillLevel);
+            btnMarkCollected = itemView.findViewById(R.id.btnMarkCollected);
         }
 
         void bind(Bin bin) {
@@ -111,8 +133,38 @@ public class BinAdapter extends RecyclerView.Adapter<BinAdapter.BinViewHolder> {
                     break;
             }
 
+            // Whole card click
             itemView.setOnClickListener(v -> {
                 if (listener != null) listener.onBinClick(bin);
+            });
+
+            // ── Mark as Collected button ──────────────────────────────────
+            btnMarkCollected.setOnClickListener(v -> {
+
+                // GPS proximity check
+                if (driverLocation != null
+                        && bin.getLatitude() != null
+                        && bin.getLongitude() != null) {
+
+                    Location binLocation = new Location("");
+                    binLocation.setLatitude(bin.getLatitude());
+                    binLocation.setLongitude(bin.getLongitude());
+
+                    float distance = driverLocation.distanceTo(binLocation);
+
+                    if (distance > 50) {
+                        Toast.makeText(ctx,
+                            "You must be within 50m of the bin.\nCurrently "
+                                + (int) distance + "m away.",
+                            Toast.LENGTH_LONG).show();
+                        return; // blocked
+                    }
+                }
+
+                // GPS check passed — tell the Activity to open the camera
+                if (collectListener != null) {
+                    collectListener.onCollectClick(bin.getId());
+                }
             });
         }
     }
