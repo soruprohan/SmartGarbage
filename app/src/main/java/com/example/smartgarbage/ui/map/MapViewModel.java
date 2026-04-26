@@ -102,7 +102,28 @@ public class MapViewModel extends AndroidViewModel {
 
         String origin = originLat + "," + originLng;
 
-        // Last bin is the destination (Google never reorders the destination)
+        // Find the bin farthest from the driver and move it to the end → becomes destination
+        // Rationale: the farthest bin would naturally be visited last in an optimized route,
+        // so locking it as the destination barely constrains Google's optimization.
+        // All closer bins become freely reorderable waypoints → nearest bins get visited first.
+        int farthestIdx = 0;
+        double farthestDist = -1;
+        for (int i = 0; i < routeBins.size(); i++) {
+            Bin b = routeBins.get(i);
+            double dx = b.getLatitude() - originLat;
+            double dy = b.getLongitude() - originLng;
+            double dist = dx * dx + dy * dy;
+            if (dist > farthestDist) {
+                farthestDist = dist;
+                farthestIdx = i;
+            }
+        }
+        // Swap farthest bin to end position (destination slot)
+        Bin farthest = routeBins.get(farthestIdx);
+        routeBins.set(farthestIdx, routeBins.get(routeBins.size() - 1));
+        routeBins.set(routeBins.size() - 1, farthest);
+
+        // Last bin is now the farthest — use it as destination (Google never reorders the destination)
         Bin lastBin = routeBins.get(routeBins.size() - 1);
         String destination = lastBin.getLatitude() + "," + lastBin.getLongitude();
 
