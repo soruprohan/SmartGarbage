@@ -141,11 +141,15 @@ public class BinAdapter extends RecyclerView.Adapter<BinAdapter.BinViewHolder> {
             // ── Mark as Collected button ──────────────────────────────────
             btnMarkCollected.setOnClickListener(v -> {
 
-                // GPS proximity check
-                if (driverLocation != null
-                        && bin.getLatitude() != null
-                        && bin.getLongitude() != null) {
+                // GPS proximity check — block if location is unavailable
+                if (driverLocation == null) {
+                    Toast.makeText(ctx,
+                        "Waiting for your GPS location. Please try again in a moment.",
+                        Toast.LENGTH_LONG).show();
+                    return;
+                }
 
+                if (bin.getLatitude() != null && bin.getLongitude() != null) {
                     Location binLocation = new Location("");
                     binLocation.setLatitude(bin.getLatitude());
                     binLocation.setLongitude(bin.getLongitude());
