@@ -156,9 +156,9 @@ public class BinAdapter extends RecyclerView.Adapter<BinAdapter.BinViewHolder> {
 
                     float distance = driverLocation.distanceTo(binLocation);
 
-                    if (distance > 50) {
+                    if (distance > 100) {
                         Toast.makeText(ctx,
-                            "You must be within 50m of the bin.\nCurrently "
+                            "You must be within 100m of the bin.\nCurrently "
                                 + (int) distance + "m away.",
                             Toast.LENGTH_LONG).show();
                         return; // blocked
